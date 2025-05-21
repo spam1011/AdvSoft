@@ -13,7 +13,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve -o",
-    "build": "ng build",
+    "build": "ng build && echo '/* /index.html 200' > dist/coreui-free-angular-admin-template/_redirects",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
