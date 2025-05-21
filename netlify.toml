@@ -1,7 +1,6 @@
 [build]
-  base = "."
-  publish = "Frontend/dist/coreui-free-angular-admin-template"
-  command = "cd Frontend && npm install && npm run build"
+  command = "cd Frontend && npm install && npm run build" # Your original build command
+  publish = "Frontend/dist/coreui-free-angular-admin-template" # Your publish directory
 
 [[redirects]]
   from = "/*"
