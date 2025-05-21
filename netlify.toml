@@ -1,6 +1,6 @@
 # filepath: netlify.toml
 [build]
-  base = "frontend"
+  base = "Frontend"
   publish = "build"  # or "dist" depending on your framework
   command = "npm run build"  # or appropriate build command
 
