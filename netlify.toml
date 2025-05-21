@@ -1,8 +1,7 @@
-# filepath: netlify.toml
 [build]
   base = "Frontend"
-  publish = "build"  # or "dist" depending on your framework
-  command = "npm run build"  # or appropriate build command
+  publish = "dist/coreui-free-angular-admin-template"
+  command = "npm run build"
 
 [[redirects]]
   from = "/*"
