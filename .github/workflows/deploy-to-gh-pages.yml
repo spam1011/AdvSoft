@@ -36,15 +36,28 @@ jobs:
           cd Frontend
           npm run build -- --configuration production --base-href=/AdvSoft/ --legacy-peer-deps
 
+      - name: Debug directory structure
+        run: |
+          find Frontend/dist -type d | sort
+          find Frontend/dist -name "index.html" -type f
+
       - name: Add _redirects file for routing
         run: |
-          cd Frontend/dist/coreui-free-angular-admin-template
-          echo "/* /index.html 200" > _redirects
-          cp index.html 404.html
+          # Find the directory containing index.html
+          INDEX_DIR=$(find Frontend/dist -name "index.html" -type f | xargs dirname)
+          if [ -n "$INDEX_DIR" ]; then
+            echo "Found index.html in $INDEX_DIR"
+            cd "$INDEX_DIR"
+            echo "/* /index.html 200" > _redirects
+            cp index.html 404.html
+          else
+            echo "Error: Could not find index.html in build output"
+            exit 1
+          fi
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: Frontend/dist/coreui-free-angular-admin-template
+          folder: ${{ steps.find-output.outputs.output_dir || 'Frontend/dist/coreui-free-angular-admin-template' }}
           branch: gh-pages
           clean: true
