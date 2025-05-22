@@ -18,7 +18,7 @@ import {
 })
 export class PredictionService {
   private apiUrl = environment.apiUrl || 'https://api.yourdomain.com';
-  private useMockData = true; // Set to false to use real API
+  private useMockData = false; // Set to false to use real API
   private authToken: string | null = null;
 
   constructor(private http: HttpClient) {
