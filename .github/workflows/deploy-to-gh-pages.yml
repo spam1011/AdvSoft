@@ -1,0 +1,50 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+          cache-dependency-path: './Frontend/package-lock.json'
+
+      - name: Install dependencies
+        run: |
+          cd Frontend
+          npm ci
+
+      - name: Update base URL for GitHub Pages
+        run: |
+          cd Frontend
+          sed -i 's/<base href="\/">/<base href="\/AdvSoft\/">/' src/index.html
+      
+      - name: Build Angular project
+        run: |
+          cd Frontend
+          npm run build -- --configuration production --base-href=/AdvSoft/
+
+      - name: Add _redirects file for routing
+        run: |
+          cd Frontend/dist/coreui-free-angular-admin-template
+          echo "/* /index.html 200" > _redirects
+          cp index.html 404.html
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: Frontend/dist/coreui-free-angular-admin-template
+          branch: gh-pages
+          clean: true
