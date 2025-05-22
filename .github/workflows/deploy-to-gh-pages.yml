@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           cd Frontend
-          npm ci
+          npm ci --legacy-peer-deps
 
       - name: Update base URL for GitHub Pages
         run: |
@@ -34,7 +34,7 @@ jobs:
       - name: Build Angular project
         run: |
           cd Frontend
-          npm run build -- --configuration production --base-href=/AdvSoft/
+          npm run build -- --configuration production --base-href=/AdvSoft/ --legacy-peer-deps
 
       - name: Add _redirects file for routing
         run: |
